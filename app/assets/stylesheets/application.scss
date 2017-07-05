@@ -1,2 +1,22 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+
+#footer {
+  clear: both;
+  position: relative;
+  z-index: 10;
+  height: 3em;
+  margin-top: -3em;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  margin: auto;
+  ul {
+    li {
+      float: left;
+      margin-right: 20px;
+      list-style: none;
+      display: inline;
+    }
+  }
+}
