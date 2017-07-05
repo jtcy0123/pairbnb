@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pairbnb</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,5 +10,14 @@
   <body>
     <%= render partial: '/layouts/navigation' %>
     <%= yield %>
+    <div id="footer">
+      <ul>
+        <li>About Us</li>
+        <li>Privacy</li>
+        <li>Terms</li>
+        <li>Contact Us</li>
+        <li>Signup for newsletter</li>
+      </ul>
+    </div>
   </body>
 </html>
