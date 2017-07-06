@@ -10,19 +10,18 @@ class UsersController < Clearance::UsersController
     p @user.errors.full_messages
 
     if @user.save
-      # format.html { redirect_to @user, notice: 'User was successfully created.' }
-      # format.js
-      # format.json { render json: @user }
       sign_in @user
-      redirect_to action: "new"
+      redirect_to action: "show", id: @user
     else
       respond_to do |format|
         format.html { render action: "new" }
         format.js
-        # format.json { render json: @user }
-        # render template: "users/new"
       end
     end
+  end
+
+  def show
+    @user = User.find(params[:id])
   end
 
   private
