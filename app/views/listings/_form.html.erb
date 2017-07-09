@@ -1,0 +1,33 @@
+<%= form_for [current_user, @listing] do |form| %>
+  <h2><%= t(".title") %></h2>
+  <div class="text-field">
+    <%= form.label :name %>
+    <%= form.text_field :name, type: 'name' %>
+  </div>
+  <div class="text-field">
+    <%= form.label :location %>
+    <%= form.text_field :location, type: 'location' %>
+  </div>
+  <div class="text-field">
+    <%= form.label :city %>
+    <%= form.text_field :city, type: 'city' %>
+  </div>
+  <div class="text-field">
+    <%= form.label :pax_num %>
+    <%= form.text_field :pax_num, type: 'pax_num' %>
+  </div>
+  <div class="text-field">
+    <%= form.label :price %>
+    <%= form.text_field :price, type: 'price' %>
+  </div>
+  <div class="text-field">
+    <%= form.label :Tags %>
+    <%= form.check_box :tag_list, {:multiple => true}, "smoking", nil %>Smoking
+    <%= form.check_box :tag_list, {:multiple => true}, "no smoking", nil %>No Smoking
+    <%= form.check_box :tag_list, {:multiple => true}, "pets", nil %>Pets
+  </div>
+  <%= form.hidden_field :user_id, :value => current_user.id %>
+  <div class="submit-field">
+    <%= form.submit %>
+  </div>
+<% end %>

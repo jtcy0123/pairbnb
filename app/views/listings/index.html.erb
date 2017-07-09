@@ -1,0 +1,32 @@
+<h1>PairBnB</h1>
+<p>Welcome</p>
+<% if signed_in? %>
+  <p> Thanks for signing in </p>
+<% end %>
+<!--  -->
+<%= form_tag( search_autocomplete_path, method: "get" ) do %>
+  <%= text_field_tag( :search, params[:search], placeholder: 'City', :id => 'autocomplete_search' ) %>
+  <%= submit_tag( "Go" ) %>
+  <div id="autocomplete_search_results"></div>
+<% end %>
+<!--  -->
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th>City</th>
+    <th>Max No. Pax</th>
+    <th>Tags</th>
+    <th>Price</th>
+  </tr>
+  <% @listings.each do |l| %>
+    <tr>
+      <td><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></td>
+      <td><%= l.location %></td>
+      <td><%= l.city %></td>
+      <td><%= l.pax_num %></td>
+      <td><%= raw l.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></td>
+      <td>RM <%= l.price %></td>
+    </tr>
+  <% end %>
+</table>
