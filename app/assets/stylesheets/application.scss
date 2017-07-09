@@ -1,5 +1,7 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+@import 'listings/index';
+@import 'listings/show';
 
 #footer {
   clear: both;

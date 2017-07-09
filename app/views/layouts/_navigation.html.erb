@@ -10,6 +10,7 @@
       <% end %>
       <ul class="nav navbar-nav pull-right">
         <% if signed_in? %>
+          <li><%= link_to "Add House", new_user_listing_path(current_user) %></li>
           <li><%= link_to 'PROFILE', :controller => "users", :action => "show", :id => current_user %></li>
           <li><span><%= current_user.email %></span></li>
           <li><%= link_to 'Sign out', sign_out_path, method: :delete %></li>

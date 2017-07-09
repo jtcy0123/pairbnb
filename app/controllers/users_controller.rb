@@ -6,9 +6,6 @@ class UsersController < Clearance::UsersController
 
   def create
     @user = User.new(user_params)
-    p @user.valid?
-    p @user.errors.full_messages
-
     if @user.save
       sign_in @user
       redirect_to action: "show", id: @user
