@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  enum role: [ :customer, :admin, :moderator ]
   include Clearance::User
   validates :first_name, presence: true
   validates :last_name, presence: true
