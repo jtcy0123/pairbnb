@@ -32,11 +32,18 @@
       <td><%= l.pax_num %></td>
       <td><%= raw l.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></td>
       <td>RM <%= l.price %></td>
+      <% if current_user && current_user.role == "admin" %>
+        <td><%= l.status %></td>
+        <td><%= form_for [User.find(l.user_id), l] do |form| %>
+            <button type="submit">Verify Property</button>
+          <% end %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
 <div id = "nav">
   <button><%= link_to 'Newest', root_path %></button>
+  <%= @page %>
   <button><%= link_to 'Previous 15 Listings', root_path(page: @page - 1) %></button>
   <button><%= link_to "Next 15 Listings", root_path(page: @page + 1) %></button>
 </div>

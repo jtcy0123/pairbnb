@@ -8,7 +8,11 @@ class ListingsController < ApplicationController
       @listings = Listing.tagged_with(params[:tag])
     else
       # @listings = Listing.all
-      @listings = Listing.order(:created_at).limit(RIPPLES_PER_PAGE).offset(@page * RIPPLES_PER_PAGE)
+      if signed_in? && current_user.role == "admin"
+        @listings = Listing.order(:created_at).limit(RIPPLES_PER_PAGE).offset(@page * RIPPLES_PER_PAGE)
+      else
+        @listings = Listing.where(status: "verified").order(:created_at).limit(RIPPLES_PER_PAGE).offset(@page * RIPPLES_PER_PAGE)
+      end
     end
   end
 
@@ -31,6 +35,12 @@ class ListingsController < ApplicationController
   def show
     @house = Listing.find(params[:id])
     @reservation = Reservation.new
+  end
+
+  def update
+    list = Listing.find(params[:id])
+    list.update(status: "verified")
+    redirect_to :back
   end
 
   def autocomplete
