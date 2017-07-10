@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :users, except: [:create, :new] do
     resources :listings, except: [:index]
+    resources :reservations, only: [:index]
   end
 
   resources :listings, only: [] do
