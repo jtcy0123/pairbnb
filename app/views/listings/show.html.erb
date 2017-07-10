@@ -1,10 +1,3 @@
-  <script>
-  $( function() {
-    $( "#datepicker" ).datepicker();
-  } );
-</script>
-<!--  -->
-<!--  -->
 <div class="row">
   <div class="col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
     <h1 class="text-center">
@@ -27,14 +20,7 @@
     </div>
     <div class="col-md-4 col-xs-4">
       <h3 class="text-center">
-        <%= form_for [current_user, @house] do |form| %>
-          <div class="text-field">
-            <%= form.label :date %>
-            <%= form.text_field :pax_num, type: 'name' %>
-          </div>
-          <p>Date: <input type="text" id="datepicker"></p>
-          <button id="bookBtn" class="btn">BOOK</button>
-        <% end %>
+        <%= button_to "BOOK", new_listing_reservation_path(listing_id: @house.id), :method => "get" %>
       </h3>
     </div>
     <div class="col-md-4 col-xs-4">

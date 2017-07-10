@@ -1,0 +1,18 @@
+<h1>MY RESERVATIONS</h1>
+<table>
+  <tr>
+    <th>Property Name</th>
+    <th>Check In</th>
+    <th>Check Out</th>
+    <th>No. of Guest</th>
+  </tr>
+  <% @reservations.each do |r| %>
+    <% @house = Listing.find(r.listing_id) %>
+    <tr>
+      <td><%= @house.name %></td>
+      <td><%= r.checkin %></td>
+      <td><%= r.checkout %></td>
+      <td><%= r.guest_num %></td>
+    </tr>
+  <% end %>
+</table>

@@ -28,6 +28,7 @@ class ListingsController < ApplicationController
 
   def show
     @house = Listing.find(params[:id])
+    @reservation = Reservation.new
   end
 
   def autocomplete

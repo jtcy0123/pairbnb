@@ -1,0 +1,17 @@
+  <script>
+  $( function() {
+    $( "#datepicker1" ).datepicker();
+    $( "#datepicker2" ).datepicker();
+  } );
+</script>
+<!--  -->
+<!--  -->
+<h1> reservation form </h1>
+<%= form_for [@house, @reservation] do |form| %>
+  <p>Check In: <input type="text" id="datepicker1" name="reservation[checkin]"></p>
+  <p>Check Out: <input type="text" id="datepicker2" name="reservation[checkout]"></p>
+  <p>No. of Guest: <input type="text" name="reservation[guest_num]"></p>
+  <input type="hidden" name="reservation[user_id]" value="<%= current_user.id %>">
+  <input type="hidden" name="reservation[listing_id]" value="<%= @house.id %>">
+  <button id="bookBtn" class="btn">BOOK</button>
+<% end %>
