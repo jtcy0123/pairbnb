@@ -1,12 +1,14 @@
 class ListingsController < ApplicationController
   before_action :require_login, only: [:new]
-  # before_action :find_user, except: :index
+  before_filter :set_page, only: [:index]
+  RIPPLES_PER_PAGE = 15
 
   def index
     if params[:tag]
       @listings = Listing.tagged_with(params[:tag])
     else
-      @listings = Listing.all
+      # @listings = Listing.all
+      @listings = Listing.order(:created_at).limit(RIPPLES_PER_PAGE).offset(@page * RIPPLES_PER_PAGE)
     end
   end
 
@@ -49,8 +51,15 @@ class ListingsController < ApplicationController
     params.require(:listing).permit(:name, :location, :city, :pax_num, :price, {:tag_list => []}, :user_id)
   end
 
-  # def find_user
-  #   User.find(params[:user_id])
-  # end
+  def set_page
+    @page = params[:page].to_i || 0
+    if @page <= 0
+      @page = 0
+    elsif @page <= Listing.all.length / RIPPLES_PER_PAGE
+      @page
+    else
+      @page = Listing.all.length / RIPPLES_PER_PAGE
+    end
+  end
 
 end

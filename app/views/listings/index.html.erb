@@ -10,6 +10,11 @@
   <div id="autocomplete_search_results"></div>
 <% end %>
 <!--  -->
+<div id = "nav">
+  <button><%= link_to 'Newest', root_path %></button>
+  <button><%= link_to 'Previous 15 Listings', root_path(page: @page.to_i - 1) %></button>
+  <button><%= link_to "Next 15 Listings", root_path(page: @page.to_i + 1) %></button>
+</div>
 <table>
   <tr>
     <th>Name</th>
@@ -30,3 +35,8 @@
     </tr>
   <% end %>
 </table>
+<div id = "nav">
+  <button><%= link_to 'Newest', root_path %></button>
+  <button><%= link_to 'Previous 15 Listings', root_path(page: @page - 1) %></button>
+  <button><%= link_to "Next 15 Listings", root_path(page: @page + 1) %></button>
+</div>

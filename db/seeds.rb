@@ -5,3 +5,48 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# Seed Users
+user = {}
+user['password'] = 'asdfgh'
+
+ActiveRecord::Base.transaction do
+  20.times do
+    user['first_name'] = Faker::Name.first_name
+    user['last_name'] = Faker::Name.last_name
+    user['email'] = Faker::Internet.email
+
+    User.create(user)
+  end
+end
+
+# Seed Listings
+listing = {}
+uids = []
+User.all.each { |u| uids << u.id }
+
+ActiveRecord::Base.transaction do
+  40.times do
+    listing['name'] = Faker::App.name
+    # listing['place_type'] = rand(1..3)
+    # listing['property_type'] = ["House", "Entire Floor", "Condominium", "Villa", "Townhouse", "Castle", "Treehouse", "Igloo", "Yurt", "Cave", "Chalet", "Hut", "Tent", "Other"].sample
+
+    # listing['room_number'] = rand(0..5)
+    # listing['bed_number'] = rand(1..6)
+    listing['pax_num'] = rand(1..10)
+
+    # listing['country'] = Faker::Address.country
+    # listing['state'] = Faker::Address.state
+    listing['city'] = Faker::Address.city
+    # listing['zipcode'] = Faker::Address.zip_code
+    listing['location'] = Faker::Address.street_address
+
+    listing['price'] = rand(80..500)
+    # listing['description'] = Faker::Hipster.sentence
+    listing['tag_list'] = ["pets", "smoking", "no-smoking"].sample(2)
+
+    listing['user_id'] = uids.sample
+
+    Listing.create(listing)
+  end
+end

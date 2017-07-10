@@ -17,6 +17,9 @@ gem 'omniauth-facebook'
 # for tags
 gem 'acts-as-taggable-on', '~> 4.0'
 
+# for test
+gem 'faker'
+
 # for calender picker
 gem 'jquery-ui-rails', '5.0.5'
 
