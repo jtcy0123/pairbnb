@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: "listings#index"
+  root to: "welcome#index"
 
-  get 'tags/:tag' => 'listings#index', as: :tag
+  get 'tags/:tag' => 'welcome#index', as: :tag
   get '/search' => 'listings#autocomplete', as: :search_autocomplete
 
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, except: [:create, :new] do
-    resources :listings, except: [:index]
+    resources :listings
     resources :reservations, only: [:index]
   end
 

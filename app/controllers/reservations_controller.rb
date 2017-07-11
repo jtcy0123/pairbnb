@@ -11,12 +11,12 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    convert_date
+    # convert_date
     @reserve = Reservation.new(reserve_params)
     if @reserve.save
-      # redirect_to action: "show", id: @reserve
       redirect_to user_reservations_path(current_user)
     else
+      flash[:error] = @reserve.errors.full_messages.join('. ')
       redirect_to :back
     end
   end
@@ -27,9 +27,9 @@ class ReservationsController < ApplicationController
     params.require(:reservation).permit(:checkin, :checkout, :guest_num, :user_id, :listing_id)
   end
 
-  def convert_date
-    params[:reservation][:checkin].gsub!(/([0-9]+).([0-9]+).([0-9]+)/, '\2-\1-\3')
-    params[:reservation][:checkout].gsub!(/([0-9]+).([0-9]+).([0-9]+)/, '\2-\1-\3')
-  end
+  # def convert_date
+  #   params[:reservation][:checkin].gsub!(/([0-9]+).([0-9]+).([0-9]+)/, '\2-\1-\3')
+  #   params[:reservation][:checkout].gsub!(/([0-9]+).([0-9]+).([0-9]+)/, '\2-\1-\3')
+  # end
 
 end

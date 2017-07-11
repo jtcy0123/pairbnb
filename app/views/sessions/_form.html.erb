@@ -1,20 +1,21 @@
 <%= form_for :session, url: session_path, remote: true do |form| %>
   <div class="text-field">
-    <%= form.label :email %>
-    <%= form.text_field :email, type: 'email' %>
+    <%= form.text_field :email, type: 'email', placeholder: "email"  %>
   </div>
   <div class="password-field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
+    <%= form.password_field :password , placeholder: "password" %>
   </div>
   <div class="submit-field">
-    <%= form.submit %>
+    <%= form.submit class: 'btn' %>
   </div>
+  <br>
   <div class="other-links">
+    <a href="/auth/facebook"><button class="btn btn-primary">Sign in with Facebook</button></a><br>
     <% if Clearance.configuration.allow_sign_up? %>
-      <%= link_to t(".sign_up"), sign_up_path %>
+      new user?
+      <%= link_to "create new account", sign_up_path %><br>
     <% end %>
-    <%= link_to "Sign in with Facebook", "/auth/facebook" %>
-    <%= link_to t(".forgot_password"), new_password_path %>
+    forgot your password?
+    <%= link_to "click here", new_password_path %>
   </div>
 <% end %>

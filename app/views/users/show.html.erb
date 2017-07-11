@@ -1,2 +1,6 @@
 <h1>This is user's profile</h1>
+<% if current_user.photo.url != nil %>
+  <%= image_tag @user.photo.url, size: "500x500" %>
+<% end %>
 <p><%= @user.email %></p>
+<p><%= link_to "Edit", '/users/' + @user.id.to_s + '/edit' %></p>

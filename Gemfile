@@ -9,16 +9,22 @@ gem 'bootstrap-sass'
 
 # for user authentication
 gem 'clearance'
+
 # for apps key & log in with facebook
 gem 'figaro'
 gem 'pusher'
 gem 'omniauth'
 gem 'omniauth-facebook'
+
 # for tags
 gem 'acts-as-taggable-on', '~> 4.0'
 
 # for test
 gem 'faker'
+
+# for uploading photos
+gem 'carrierwave'
+gem 'mini_magick'
 
 # for calender picker
 gem 'jquery-ui-rails', '5.0.5'

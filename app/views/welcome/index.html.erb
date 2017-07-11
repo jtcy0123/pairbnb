@@ -1,0 +1,56 @@
+<h1>PairBnB</h1>
+<p>Welcome</p>
+<% if signed_in? %>
+  <p> Thanks for signing in </p>
+<% end %>
+<!--  -->
+<%= form_tag( search_autocomplete_path, method: "get" ) do %>
+  <%= text_field_tag( :search, params[:search], placeholder: 'City', :id => 'autocomplete_search' ) %>
+  <%= submit_tag( "Go" ) %>
+  <div id="autocomplete_search_results"></div>
+<% end %>
+<!--  -->
+<div id = "nav">
+  <% if @listings.length > 15 %>
+    <button><%= link_to 'Newest', root_path %></button>
+    <% if @page != 0 %>
+      <button><%= link_to 'Previous 15 Listings', root_path(page: @page - 1) %></button>
+    <% end %>
+    <button><%= link_to "Next 15 Listings", root_path(page: @page.to_i + 1) %></button>
+  <% end %>
+</div>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th>City</th>
+    <th>Max No. Pax</th>
+    <th>Tags</th>
+    <th>Price</th>
+  </tr>
+  <% @listings.each do |l| %>
+    <tr>
+      <td><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></td>
+      <td><%= l.location %></td>
+      <td><%= l.city %></td>
+      <td><%= l.pax_num %></td>
+      <td><%= raw l.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></td>
+      <td>RM <%= l.price %></td>
+      <% if current_user && current_user.role == "admin" %>
+        <td><%= l.status %></td>
+        <td><%= form_for [User.find(l.user_id), l] do |form| %>
+            <button type="submit">Verify Property</button>
+          <% end %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+<div id = "nav">
+  <% if @listings.length > 15 %>
+    <button><%= link_to 'Newest', root_path %></button>
+    <% if @page != 0 %>
+      <button><%= link_to 'Previous 15 Listings', root_path(page: @page - 1) %></button>
+    <% end %>
+    <button><%= link_to "Next 15 Listings", root_path(page: @page.to_i + 1) %></button>
+  <% end %>
+</div>
