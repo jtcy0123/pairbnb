@@ -1,5 +1,14 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+    <h3 class="text-center">
+      <% if @house.photos.url != nil %>
+        <%= image_tag @house.photos.url, size: "500x500" %>
+      <% end %>
+    </h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
     <h1 class="text-center">
       THE HOUSE
     </h1>
@@ -19,8 +28,12 @@
       </h3>
     </div>
     <div class="col-md-4 col-xs-4">
+      <br>
+      <h1 class="text-center">
+        Price
+      </h1>
       <h3 class="text-center">
-        <%= button_to "BOOK", new_listing_reservation_path(listing_id: @house.id), :method => "get" %>
+        RM <%= @house.price %> /night
       </h3>
     </div>
     <div class="col-md-4 col-xs-4">
@@ -36,10 +49,7 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-8">
     <h1 class="text-center">
-      Price
+      <%= button_to "BOOK", new_listing_reservation_path(listing_id: @house.id), :method => "get", class: 'btn-lg' %>
     </h1>
-    <h3 class="text-center">
-      RM <%= @house.price %>
-    </h3>
   </div>
 </div>

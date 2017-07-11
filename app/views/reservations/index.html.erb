@@ -9,7 +9,7 @@
   <% @reservations.each do |r| %>
     <% @house = Listing.find(r.listing_id) %>
     <tr>
-      <td><%= @house.name %></td>
+      <td><%= link_to @house.name, '/users/' + @house.user_id.to_s + '/listings/' + @house.id.to_s %></td>
       <td><%= r.checkin %></td>
       <td><%= r.checkout %></td>
       <td><%= r.guest_num %></td>

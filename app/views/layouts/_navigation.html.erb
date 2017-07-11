@@ -11,12 +11,16 @@
       <ul class="nav navbar-nav pull-right">
         <% if signed_in? %>
           <li><%= link_to "Add House", new_user_listing_path(current_user) %></li>
+          <li><%= link_to "My Listings", user_listings_path(current_user) %></li>
           <li><%= link_to "My Reservations", user_reservations_path(current_user) %></li>
           <li><%= link_to 'PROFILE', :controller => "users", :action => "show", :id => current_user %></li>
-          <li><span><%= current_user.email %></span></li>
+          <li><span style="color: grey"><%= current_user.email %></span><br>
+            <% if current_user.photo.url != nil %>
+              &emsp;&emsp;<%= image_tag current_user.photo.thumb.url %>
+            <% end %></li>
           <li><%= link_to 'Sign out', sign_out_path, method: :delete %></li>
         <% else %>
-          <li><%= link_to 'Sign in', sign_in_path %></li>
+          <li><%= link_to 'Login', sign_in_path %></li>
         <% end %>
       </ul>
     </div>
