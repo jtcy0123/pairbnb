@@ -21,3 +21,23 @@
     }
   }
 }
+
+.largediv {
+  margin-left: 3.5%;
+  margin-right: auto;
+  text-align: center;
+}
+.smalldiv {
+  float: left;
+  border-style: outset;
+  width: 300px;
+  height: auto;
+  margin: 10px;
+  padding: 5px;
+}
+#autocomplete_search, #dp1, #dp2 {
+  width: 25%;
+  height: 35px;
+  box-shadow: inset 0 0 0px;
+  padding-left: 10px;
+}

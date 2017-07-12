@@ -10,9 +10,11 @@
       <% end %>
       <ul class="nav navbar-nav pull-right">
         <% if signed_in? %>
-          <li><%= link_to "Add House", new_user_listing_path(current_user) %></li>
-          <li><%= link_to "My Listings", user_listings_path(current_user) %></li>
-          <li><%= link_to "My Reservations", user_reservations_path(current_user) %></li>
+          <% if current_user.role != "admin" %>
+            <li><%= link_to "Add House", new_user_listing_path(current_user) %></li>
+            <li><%= link_to "My Listings", user_listings_path(current_user) %></li>
+            <li><%= link_to "My Reservations", user_reservations_path(current_user) %></li>
+          <% end %>
           <li><%= link_to 'PROFILE', :controller => "users", :action => "show", :id => current_user %></li>
           <li><span style="color: grey"><%= current_user.email %></span><br>
             <% if current_user.photo.url != nil %>

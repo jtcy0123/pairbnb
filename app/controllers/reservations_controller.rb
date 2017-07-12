@@ -11,12 +11,23 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    # convert_date
-    @reserve = Reservation.new(reserve_params)
-    if @reserve.save
-      redirect_to user_reservations_path(current_user)
+    indate = params[:reservation][:checkin].to_date
+    outdate = params[:reservation][:checkout].to_date
+    date = []
+    while indate < outdate
+      date << indate.to_s
+      indate += 1
+    end
+    if Reservation.where(checkin: date) == 0
+      @reserve = Reservation.new(reserve_params)
+      if @reserve.save
+        redirect_to user_reservations_path(current_user)
+      else
+        flash[:error] = @reserve.errors.full_messages.join('. ')
+        redirect_to :back
+      end
     else
-      flash[:error] = @reserve.errors.full_messages.join('. ')
+      flash[:msg] = "room are not available on these dates"
       redirect_to :back
     end
   end
@@ -27,9 +38,5 @@ class ReservationsController < ApplicationController
     params.require(:reservation).permit(:checkin, :checkout, :guest_num, :user_id, :listing_id)
   end
 
-  # def convert_date
-  #   params[:reservation][:checkin].gsub!(/([0-9]+).([0-9]+).([0-9]+)/, '\2-\1-\3')
-  #   params[:reservation][:checkout].gsub!(/([0-9]+).([0-9]+).([0-9]+)/, '\2-\1-\3')
-  # end
 
 end

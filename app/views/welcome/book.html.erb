@@ -1,0 +1,70 @@
+<% if @booked != nil %>
+  <% @booked.each do |r| %>
+    <% @listings = @listings.where.not(id: r.listing_id) %>
+  <% end %>
+<% end %>
+<div style="text-align: center;">
+  <%= form_tag( search_autocomplete_path, method: "get" ) do %>
+    <%= text_field_tag( :search, params[:search], placeholder: 'City', :id => 'autocomplete_search', required: true ) %><%= text_field_tag( :checkin, params[:checkin], placeholder: 'Check-in', :id => 'dp1' ) %><%= text_field_tag( :checkout, params[:checkout], placeholder: 'Check-out', :id => 'dp2' ) %>
+    <%= button_tag(type: 'submit', class: 'btn btn-default') do %>
+      <i class="glyphicon glyphicon-search"></i>
+    <% end %>
+  <% end %></div>
+<!--  -->
+<div id = "nav">
+  <% if @listings.length > 8 %>
+    <button><%= link_to 'Newest', root_path %></button>
+    <% if @page == 0 %>
+      <button style="color: grey" disabled>Previous 8 Listings</button>
+    <% else %>
+      <button><%= link_to 'Previous 8 Listings', root_path(page: @page - 1) %></button>
+    <% end %>
+    <% if @page == @listings.length / 8 %>
+      <button style="color: grey" disabled>Next 8 Listings</button>
+    <% else %>
+      <button><%= link_to "Next 8 Listings", root_path(page: @page + 1) %></button>
+    <% end %>
+    <button><%= link_to "Oldest", root_path(page: @listings.length / 8) %></button>
+  <% end %>
+</div>
+<div class="largediv">
+  <% @listings.each do |l| %>
+    <div class="smalldiv">
+      <% if l.photos == [] %>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpXXggjvN_1vItyiWZKVjPqwnMUgTG1mw_vKqqhUfj8t2qg6aU" style="height: 180px" >
+      <% else %>
+        <%= image_tag l.photos[0].url, style: "height: 180px" %>
+      <% end %>
+      <p><b><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></b></p>
+      <p><%= l.location %>, <%= l.city %></p>
+      <p><%= raw l.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></p>
+      <p>RM <%= l.price %></p>
+      <% if @from != "" %>
+        <p style="background-color: #fff; width: 13%"><%= form_for [l, @reservation] do |form| %>
+            <%= form.hidden_field :checkin, value: @from %>
+            <%= form.hidden_field :checkout, value: @until %>
+            <%= form.select :guest_num, (1..10).to_a %> guest(s)
+            <%= form.hidden_field :user_id, value: current_user.id %>
+            <%= form.hidden_field :listing_id, value: l.id %>
+            <%= form.submit "BOOK", class: 'btn' %>
+          <% end %></p>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<div id = "nav">
+  <% if @listings.length > 8 %>
+    <button><%= link_to 'Newest', root_path %></button>
+    <% if @page == 0 %>
+      <button style="color: grey" disabled>Previous 8 Listings</button>
+    <% else %>
+      <button><%= link_to 'Previous 8 Listings', root_path(page: @page - 1) %></button>
+    <% end %>
+    <% if @page == @listings.length / 8 %>
+      <button style="color: grey" disabled>Next 8 Listings</button>
+    <% else %>
+      <button><%= link_to "Next 8 Listings", root_path(page: @page + 1) %></button>
+    <% end %>
+    <button><%= link_to "Oldest", root_path(page: @listings.length / 8) %></button>
+  <% end %>
+</div>

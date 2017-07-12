@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20170710093101) do
     t.string   "tag_list",   default: [],                        array: true
     t.string   "city"
     t.string   "status",     default: "unverified"
-    t.string   "photos"
+    t.json     "photos"
     t.index ["user_id"], name: "index_listings_on_user_id", using: :btree
   end
 

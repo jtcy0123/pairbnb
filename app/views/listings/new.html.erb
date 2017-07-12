@@ -1,1 +1,11 @@
-<%= render partial: '/listings/form' %>
+<style>
+  .form-control {
+  background-color: #ddd;
+  }
+</style>
+<div class="container">
+  <h2><i>New Listing</i></h2>
+  <%= form_for [current_user, @listing], class: "form-horizontal" do |form| %>
+    <%= render partial: '/listings/form', object: form %>
+  <% end %>
+</div>

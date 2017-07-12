@@ -1,22 +1,37 @@
 <h3>LISTINGS UPLOADED BY YOU</h3>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Location</th>
-    <th>City</th>
-    <th>Max No. Pax</th>
-    <th>Tags</th>
-    <th>Price</th>
-  </tr>
+<div class="largediv">
   <% @listings.each do |l| %>
-    <tr>
-      <td><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></td>
-      <td><%= l.location %></td>
-      <td><%= l.city %></td>
-      <td><%= l.pax_num %></td>
-      <td><%= l.tag_list.each { |t| t }.join(', ') %></td>
-      <td>RM <%= l.price %></td>
-      <td><%= link_to "Edit", '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s + '/edit' %></td>
-    </tr>
+    <div class="smalldiv">
+      <% if l.photos == [] %>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpXXggjvN_1vItyiWZKVjPqwnMUgTG1mw_vKqqhUfj8t2qg6aU" style="height: 180px" >
+      <% else %>
+        <%= image_tag l.photos[0].url, style: "height: 180px; width: 100%" %>
+      <% end %>
+      <p><b><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></b></p>
+      <p><%= l.location %>, <%= l.city %></p>
+      <p><%= l.tag_list %></p>
+      <p>RM <%= l.price %></p>
+      <p><a href="#" data-toggle="modal" data-target="#listingModal<%=l.id%>">Edit</a></p>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="listingModal<%=l.id%>" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Listing <%= l.name %></h4>
+          </div>
+          <div class="modal-body">
+            <%= form_for [current_user, l], class: "form-horizontal" do |form|%>
+              <%= render partial: '/listings/form', object: form %>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   <% end %>
-</table>
+</div>

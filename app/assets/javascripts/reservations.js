@@ -1,14 +1,14 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
   $( function() {
-    var array = ["2017-07-14","2017-07-15","2017-07-16"]
-    $('input').datepicker({
-        minDate: 0,
-        beforeShowDay: function(date){
-            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-            return [ array.indexOf(string) == -1 ]
-        }
-    });
+    // var array = ["2017-07-14","2017-07-15","2017-07-16"]
+    // $('input').datepicker({
+    //     minDate: 0,
+    //     beforeShowDay: function(date){
+    //         var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+    //         return [ array.indexOf(string) == -1 ]
+    //     }
+    // });
    
     $( "#datepicker1" ).datepicker({
         dateFormat: "dd-mm-yy",
