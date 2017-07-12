@@ -1,18 +1,17 @@
 <h1>MY RESERVATIONS</h1>
-<table>
-  <tr>
-    <th>Property Name</th>
-    <th>Check In</th>
-    <th>Check Out</th>
-    <th>No. of Guest</th>
-  </tr>
+<div class="largediv">
   <% @reservations.each do |r| %>
-    <% @house = Listing.find(r.listing_id) %>
-    <tr>
-      <td><%= link_to @house.name, '/users/' + @house.user_id.to_s + '/listings/' + @house.id.to_s %></td>
-      <td><%= r.checkin %></td>
-      <td><%= r.checkout %></td>
-      <td><%= r.guest_num %></td>
-    </tr>
+    <div class="smalldiv">
+      <% l = Listing.find(r.listing_id) %>
+      <% if l.photos == [] %>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpXXggjvN_1vItyiWZKVjPqwnMUgTG1mw_vKqqhUfj8t2qg6aU" style="height: 180px" >
+      <% else %>
+        <%= image_tag l.photos[0].url, style: "height: 180px" %>
+      <% end %>
+      <p><b><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></b></p>
+      <p>Check In : <%= r.checkin %></p>
+      <p>Check Out : <%= r.checkout %></p>
+      <p><%= r.guest_num %> guest(s)</p>
+    </div>
   <% end %>
-</table>
+</div>

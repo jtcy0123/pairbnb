@@ -19,8 +19,8 @@
         <th>Check Out</th>
       </tr>
       <tr>
-        <td><%= form.text_field :checkin, type: 'checkin', placeholder: 'dd-mm-yyyy', id: "datepicker1" %></td>
-        <td><%= form.text_field :checkout, type: 'checkout', placeholder: 'dd-mm-yyyy', id: 'datepicker2' %></td>
+        <td><%= form.text_field :checkin, type: 'checkin', placeholder: 'dd-mm-yyyy', id: "datepicker1", required: true %></td>
+        <td><%= form.text_field :checkout, type: 'checkout', placeholder: 'dd-mm-yyyy', id: 'datepicker2', required: true %></td>
       </tr>
       <tr>
         <th colspan=2 style="text-align: center;">Guest</th>
@@ -34,4 +34,3 @@
     <%= form.submit "BOOK", class: 'btn' %>
   <% end %>
 </div>
-<input /><input2 />
