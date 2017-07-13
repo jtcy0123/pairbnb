@@ -18,10 +18,11 @@ class ReservationsController < ApplicationController
       date << indate.to_s
       indate += 1
     end
-    if Reservation.where(checkin: date) == 0
+    if Reservation.where(listing_id: params[:reservation][:listing_id]).where(checkin: date) == []
       @reserve = Reservation.new(reserve_params)
       if @reserve.save
-        redirect_to user_reservations_path(current_user)
+        # redirect_to user_reservations_path(current_user)
+        redirect_to listing_reservation_path(params[:reservation][:listing_id], @reserve.id)
       else
         flash[:error] = @reserve.errors.full_messages.join('. ')
         redirect_to :back
@@ -30,6 +31,12 @@ class ReservationsController < ApplicationController
       flash[:msg] = "room are not available on these dates"
       redirect_to :back
     end
+  end
+
+  def show
+    @house = Listing.find(params[:listing_id])
+    @reservation = Reservation.find(params[:id])
+    render template: "reservations/show"
   end
 
   private

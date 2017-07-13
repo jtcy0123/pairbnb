@@ -1,0 +1,116 @@
+<style>
+  .invoice-box{
+      max-width:800px;
+      margin:auto;
+      padding:30px;
+      border:1px solid #eee;
+      box-shadow:0 0 10px rgba(0, 0, 0, .15);
+      font-size:16px;
+      line-height:24px;
+      font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+      color:#555;
+  }
+  th {
+    border: none;
+  }
+  
+    .invoice-box table td{
+      padding:5px;
+      vertical-align:top;
+  }
+  
+    .invoice-box table tr td:nth-child(2){
+      text-align:right;
+  }
+  
+  @media only screen and (max-width: 600px) {
+      .invoice-box table tr.top table td{
+          width:100%;
+          display:block;
+          text-align:center;
+      }
+  
+      .invoice-box table tr.information table td{
+          width:100%;
+          display:block;
+          text-align:center;
+      }
+  }
+</style>
+<div class="invoice-box">
+  <h1 style="text-align: center;">BOOKING SUMMARY</h1>
+  <table cellpadding="0" cellspacing="0">
+    <tr class="information">
+      <td colspan="2">
+        <table>
+          <tr>
+            <th class="title">
+              Check In
+              <p><%= @reservation.checkin %></p>
+            </th>
+            <th style="text-align: center;">></th>
+            <th style="text-align: right;">
+              Check Out
+              <p><%= @reservation.checkout %></p>
+            </th>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr class="information">
+      <td colspan="2">
+        <table>
+          <tr>
+            <td>
+              <b><%= @house.name.capitalize %></b><br>
+              Address:<br>
+              <%= @house.location.capitalize %>, 
+              <%= @house.city.capitalize %>
+            </td>
+            <td>
+              <b>Hosted by:</b><br>
+              <%= User.find(@house.user_id).first_name %>
+              <%= User.find(@house.user_id).last_name %><br>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr class="heading">
+      <td>
+        Charges
+      </td>
+      <td>
+        .....
+      </td>
+    </tr>
+    <tr class="item">
+      <td>
+        <% @stay_days = (@reservation.checkout.to_date - @reservation.checkin.to_date).to_f%>
+        RM<%= @house.price %> x <%= @stay_days %> nights
+      </td>
+      <td>
+        RM <%= total = @house.price * @stay_days %>0
+      </td>
+    </tr>
+    <tr class="item">
+      <td>
+        GST
+      </td>
+      <td>
+        RM <%= total * 0.06 %>0
+      </td>
+    </tr>
+    <tr class="total">
+      <td></td>
+      <td>
+        <b>Total: RM <%= total * 1.06 %>0</b>
+      </td>
+    </tr>
+    <tr>
+      <td style="border: none"></td>
+      <td style="border: none"><button class="btn btn-primary">Pay</button></td>
+    </tr>
+  </table>
+</div>
+<br>

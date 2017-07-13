@@ -63,7 +63,7 @@ class ListingsController < ApplicationController
       end
     end
     @booked = Reservation.where(checkin: date)
-    @listings = Listing.search_city(params[:search].downcase)
+    @listings = Listing.where(status: "verified").search_city(params[:search].downcase)
     # respond_to do |format|
     #   format.html { render action: "index" }
     #   format.js
