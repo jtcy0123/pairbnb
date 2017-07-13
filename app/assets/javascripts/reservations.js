@@ -1,6 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-  $( function() {
+$(document).ready(function() {
     // var array = ["2017-07-14","2017-07-15","2017-07-16"]
     // $('input').datepicker({
     //     minDate: 0,

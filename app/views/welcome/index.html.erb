@@ -42,7 +42,6 @@
       <p><%= raw l.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></p>
       <p>RM <%= l.price %></p>
       <% if current_user && current_user.role == "admin" %>
-        <p><%= l.status %></p>
         <p><%= form_for [User.find(l.user_id), l] do |form| %>
             <button type="submit">Verify Property</button>
           <% end %></p>
