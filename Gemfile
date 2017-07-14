@@ -16,6 +16,9 @@ gem 'pusher'
 gem 'omniauth'
 gem 'omniauth-facebook'
 
+# for payment
+gem 'braintree'
+
 # for tags
 gem 'acts-as-taggable-on', '~> 4.0'
 
