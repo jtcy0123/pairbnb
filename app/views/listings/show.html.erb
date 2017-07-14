@@ -67,8 +67,8 @@
   <h1 style="float: left; margin-top: 0; font-family: 'Patua One', cursive;"><%= @house.name.capitalize %>
     <p><%= @house.location.capitalize %>, <%= @house.city.capitalize %></p>
   </h1>
-  <h1 style="float: right; margin-top: 0"><%= image_tag User.find(@house.user_id).photo.thumb.url, style: "border-radius: 50%;" %>
-    <p style="text-align: center;">Ken</p>
+  <h1 style="float: right; margin-top: 0; text-align: center;"><%= image_tag User.find(@house.user_id).photo.thumb.url, style: "border-radius: 50%;" %>
+    <p style="text-align: center;"><%= User.find(@house.user_id).first_name %></p>
   </h1>
 </div>
 <div class="container">

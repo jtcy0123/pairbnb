@@ -86,11 +86,11 @@
     </tr>
     <tr class="item">
       <td>
-        <% @stay_days = (@reservation.checkout.to_date - @reservation.checkin.to_date).to_f%>
-        RM<%= @house.price %> x <%= @stay_days %> nights
+        <% @stay_days = (@reservation.checkout.to_date - @reservation.checkin.to_date).to_i%>
+        RM<%= @house.price %> x <%= @stay_days %> night(s)
       </td>
       <td>
-        RM <%= total = @house.price * @stay_days %>0
+        RM <%= total = @reservation.total %>0
       </td>
     </tr>
     <tr class="item">
@@ -98,13 +98,13 @@
         GST
       </td>
       <td>
-        RM <%= total * 0.06 %>0
+        RM <%= total * 0.06 %>
       </td>
     </tr>
     <tr class="total">
       <td></td>
       <td>
-        <b>Total: RM <%= total * 1.06 %>0</b>
+        <b>Total: RM <%= total * 1.06 %></b>
       </td>
     </tr>
     <tr>

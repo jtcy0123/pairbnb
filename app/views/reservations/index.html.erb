@@ -1,23 +1,79 @@
-<h1>MY RESERVATIONS</h1>
+<% checkindates = @reservations.pluck(:checkin) %>
+<% checkindates.select! {|d| d < Date.today } %>
+<% if @listings %>
+  <h1>Bookings for Your Listings</h1>
+<% else %>
+  <h1>MY RESERVATIONS</h1>
+<% end %>
 <div class="largediv">
-  <% @reservations.each do |r| %>
+  <% @reservations.where(payment_status: "paid").where.not(checkin: checkindates).each do |r| %>
     <div class="smalldiv">
       <% l = Listing.find(r.listing_id) %>
       <% if l.photos == [] %>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpXXggjvN_1vItyiWZKVjPqwnMUgTG1mw_vKqqhUfj8t2qg6aU" style="height: 180px" >
       <% else %>
-        <%= image_tag l.photos[0].url, style: "height: 180px" %>
+        <%= image_tag l.photos[0].url, style: "height: 180px; width: 100%" %>
       <% end %>
       <p><b><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></b></p>
       <p>Check In : <%= r.checkin %></p>
       <p>Check Out : <%= r.checkout %></p>
-      <p><%= r.guest_num %> guest(s)</p>
-      <% if r.payment_status == "pending" %>
-        <p><b><%= r.payment_status %> payment</b></p>
-        <%= link_to "Make Payment", braintree_new_path(r.id) %>
-      <% else %>
-        <p><b><%= r.payment_status %></b></p>
+      <p><%= r.guest_num %> guest(s)
+        <% if @listings %>
+          booked by <%= User.find(r.user_id).first_name %></p>
       <% end %>
     </div>
   <% end %>
 </div>
+<% if @reservations.where(payment_status: "pending") != [] %>
+  <hr style="clear: both;">
+  <% if @listings %>
+    <h1 style="color: blue"><i>Bookings Pending Payment</i></h1>
+  <% else %>
+    <h1 style="color: blue"><i>Reservations Pending Payment</i></h1>
+  <% end %>
+  <div class="largediv">
+    <% @reservations.where(payment_status: "pending").where.not(checkin: checkindates).each do |r| %>
+      <div class="smalldiv">
+        <% l = Listing.find(r.listing_id) %>
+        <% if l.photos == [] %>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpXXggjvN_1vItyiWZKVjPqwnMUgTG1mw_vKqqhUfj8t2qg6aU" style="height: 180px" >
+        <% else %>
+          <%= image_tag l.photos[0].url, style: "height: 180px; width: 100%" %>
+        <% end %>
+        <p><b><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></b></p>
+        <p>Check In : <%= r.checkin %></p>
+        <p>Check Out : <%= r.checkout %></p>
+        <p><%= r.guest_num %> guest(s)
+          <% if @listings %>
+            booked by <%= User.find(r.user_id).first_name %></p>
+        <% else %>
+        </p>
+        <%= link_to "Make Payment", listing_reservation_path(l.id, r.id) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<% end %>
+<% if @reservations.where(payment_status: "paid").where(checkin: checkindates) != [] %>
+  <hr style="clear: both;">
+  <h3>Past</h3>
+  <div class="largediv">
+    <% @reservations.where(payment_status: "paid").where(checkin: checkindates).each do |r| %>
+      <div class="smalldiv">
+        <% l = Listing.find(r.listing_id) %>
+        <% if l.photos == [] %>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpXXggjvN_1vItyiWZKVjPqwnMUgTG1mw_vKqqhUfj8t2qg6aU" style="height: 180px" >
+        <% else %>
+          <%= image_tag l.photos[0].url, style: "height: 180px; width: 100%" %>
+        <% end %>
+        <p><b><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></b></p>
+        <p>Check In : <%= r.checkin %></p>
+        <p>Check Out : <%= r.checkout %></p>
+        <p><%= r.guest_num %> guest(s)
+          <% if @listings %>
+            booked by <%= User.find(r.user_id).first_name %></p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

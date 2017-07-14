@@ -1,6 +1,11 @@
 class ReservationsController < ApplicationController
   def index
-    @reservations = Reservation.where(user_id: params[:user_id]).reverse
+    if params[:format]
+      @listings = Listing.where(user_id: params[:format])
+      @reservations = Reservation.where(listing_id: @listings.pluck(:id))
+    else
+      @reservations = Reservation.where(user_id: params[:user_id])
+    end
     render template: "reservations/index"
   end
 
