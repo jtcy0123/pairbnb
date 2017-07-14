@@ -12,6 +12,12 @@
       <p>Check In : <%= r.checkin %></p>
       <p>Check Out : <%= r.checkout %></p>
       <p><%= r.guest_num %> guest(s)</p>
+      <% if r.payment_status == "pending" %>
+        <p><b><%= r.payment_status %> payment</b></p>
+        <%= link_to "Make Payment", braintree_new_path(r.id) %>
+      <% else %>
+        <p><b><%= r.payment_status %></b></p>
+      <% end %>
     </div>
   <% end %>
 </div>
