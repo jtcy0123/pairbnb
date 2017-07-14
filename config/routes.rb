@@ -23,8 +23,10 @@ Rails.application.routes.draw do
   end
 
   resources :listings, only: [] do
-    resources :reservations
+    resources :reservations, except: [:index]
   end
+
+  resources :reservations, only: [:index]
 
   get "/sign_in" => "clearance/sessions#new", as: "sign_in"
   delete "/sign_out" => "clearance/sessions#destroy", as: "sign_out"

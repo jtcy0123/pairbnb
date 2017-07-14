@@ -16,7 +16,9 @@ class BraintreeController < ApplicationController
     )
 
     if result.success?
-      Reservation.find(params[:checkout_form][:reservation_id]).update(payment_status: "paid")
+      reservation = Reservation.find(params[:checkout_form][:reservation_id])
+      ReservationMailer.booking_email(reservation).deliver
+      reservation.update(payment_status: "paid")
       redirect_to user_reservations_path(current_user), :flash => { :success => "Transaction successful!" }
     else
       redirect_to :back, :flash => { :error => "Transaction failed. Please try again." }
