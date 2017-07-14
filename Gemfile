@@ -19,6 +19,9 @@ gem 'omniauth-facebook'
 # for payment
 gem 'braintree'
 
+# for emailing background
+gem 'sidekiq'
+
 # for tags
 gem 'acts-as-taggable-on', '~> 4.0'
 
