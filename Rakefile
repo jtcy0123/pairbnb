@@ -4,3 +4,8 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
+
+namespace :jobs do
+  task work: :environment do |t|
+  end
+end
