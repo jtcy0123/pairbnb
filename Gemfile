@@ -5,6 +5,11 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# app deployment
+gem 'rails_12factor'
+gem 'unicorn'
+gem 'rack-timeout'
+
 gem 'bootstrap-sass'
 
 # for user authentication
