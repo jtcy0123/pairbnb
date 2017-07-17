@@ -36,6 +36,7 @@ gem 'faker'
 # for uploading photos
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'fog-aws' # Fog-aws gem added
 
 # for calender picker
 gem 'jquery-ui-rails', '5.0.5'
