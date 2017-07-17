@@ -1,18 +1,26 @@
 class ReservationsController < ApplicationController
   def index
-    if params[:format]
-      @listings = Listing.where(user_id: params[:format])
-      @reservations = Reservation.where(listing_id: @listings.pluck(:id))
+    if signed_in?
+      if params[:format]
+        @listings = Listing.where(user_id: params[:format])
+        @reservations = Reservation.where(listing_id: @listings.pluck(:id))
+      else
+        @reservations = Reservation.where(user_id: params[:user_id])
+      end
+      render template: "reservations/index"
     else
-      @reservations = Reservation.where(user_id: params[:user_id])
+      redirect_to sign_in_path
     end
-    render template: "reservations/index"
   end
 
   def new
-    @house = Listing.find(params[:listing_id])
-    @reservation = Reservation.new
-    render template: "reservations/new"
+    if signed_in?
+      @house = Listing.find(params[:listing_id])
+      @reservation = Reservation.new
+      render template: "reservations/new"
+    else
+      redirect_to sign_in_path
+    end
   end
 
   def create
@@ -26,6 +34,8 @@ class ReservationsController < ApplicationController
     if Reservation.where(listing_id: params[:reservation][:listing_id]).where(checkin: date) == []
       @reserve = Reservation.new(reserve_params)
       if @reserve.save
+        total_price = Listing.find(@reserve.listing_id).price * (@reserve.checkout - @reserve.checkin).to_i
+        @reserve.update(total: total_price)
         # redirect_to user_reservations_path(current_user)
         redirect_to listing_reservation_path(params[:reservation][:listing_id], @reserve.id)
       else
@@ -39,9 +49,13 @@ class ReservationsController < ApplicationController
   end
 
   def show
-    @house = Listing.find(params[:listing_id])
-    @reservation = Reservation.find(params[:id])
-    render template: "reservations/show"
+    if signed_in?
+      @house = Listing.find(params[:listing_id])
+      @reservation = Reservation.find(params[:id])
+      render template: "reservations/show"
+    else
+      redirect_to sign_in_path
+    end
   end
 
   private

@@ -24,7 +24,7 @@
     </div>
   <% end %>
 </div>
-<% if @reservations.where(payment_status: "pending") != [] %>
+<% if @reservations.where(payment_status: "pending").where.not(checkin: checkindates) != [] %>
   <hr style="clear: both;">
   <% if @listings %>
     <h1 style="color: blue"><i>Bookings Pending Payment</i></h1>

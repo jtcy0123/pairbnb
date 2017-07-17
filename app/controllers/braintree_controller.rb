@@ -1,7 +1,11 @@
 class BraintreeController < ApplicationController
   def new
-    @reservation = Reservation.find(params[:format])
-    @client_token = Braintree::ClientToken.generate
+    if signed_in?
+      @reservation = Reservation.find(params[:format])
+      @client_token = Braintree::ClientToken.generate
+    else
+      render template: "sessions/new"
+    end
   end
 
   def checkout
@@ -17,7 +21,8 @@ class BraintreeController < ApplicationController
 
     if result.success?
       reservation = Reservation.find(params[:checkout_form][:reservation_id])
-      ReservationMailer.booking_email(reservation).deliver
+      ReservationJob.perform_later(reservation.id)
+      # ReservationMailer.booking_email(reservation).deliver
       reservation.update(payment_status: "paid")
       redirect_to user_reservations_path(current_user), :flash => { :success => "Transaction successful!" }
     else

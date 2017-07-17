@@ -97,40 +97,42 @@
 </div>
 <br>
 <!-- Modal -->
-<div class="modal fade" id="bookModal" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">RESERVATION</h4>
-      </div>
-      <div class="modal-body" style="text-align: center;">
-        <%= form_for [@house, @reservation] do |form| %>
-          <table style="width: 30%;" align="center">
-            <tr>
-              <th>Check In</th>
-              <th>Check Out</th>
-            </tr>
-            <tr>
-              <td><%= form.text_field :checkin, type: 'checkin', placeholder: 'dd-mm-yyyy', id: "datepicker1", required: true %></td>
-              <td><%= form.text_field :checkout, type: 'checkout', placeholder: 'dd-mm-yyyy', id: 'datepicker2', required: true %></td>
-            </tr>
-            <tr>
-              <th colspan=2 style="text-align: center;">Guest</th>
-            </tr>
-            <tr>
-              <td colspan=2 style="text-align: center;"><%= form.select :guest_num, (1..10).to_a %> guest(s)</td>
-            </tr>
-          </table>
-          <%= form.hidden_field :user_id, value: current_user.id %>
-          <%= form.hidden_field :listing_id, value: @house.id %><br>
-          <%= form.submit "BOOK", class: 'btn' %>
-        <% end %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<% if signed_in? %>
+  <div class="modal fade" id="bookModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">RESERVATION</h4>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+          <%= form_for [@house, @reservation] do |form| %>
+            <table style="width: 30%;" align="center">
+              <tr>
+                <th>Check In</th>
+                <th>Check Out</th>
+              </tr>
+              <tr>
+                <td><%= form.text_field :checkin, type: 'checkin', placeholder: 'dd-mm-yyyy', id: "datepicker1", required: true %></td>
+                <td><%= form.text_field :checkout, type: 'checkout', placeholder: 'dd-mm-yyyy', id: 'datepicker2', required: true %></td>
+              </tr>
+              <tr>
+                <th colspan=2 style="text-align: center;">Guest</th>
+              </tr>
+              <tr>
+                <td colspan=2 style="text-align: center;"><%= form.select :guest_num, (1..10).to_a %> guest(s)</td>
+              </tr>
+            </table>
+            <%= form.hidden_field :user_id, value: current_user.id %>
+            <%= form.hidden_field :listing_id, value: @house.id %><br>
+            <%= form.submit "BOOK", class: 'btn' %>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
