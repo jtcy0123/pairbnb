@@ -2,7 +2,11 @@ class ListingsController < ApplicationController
   before_action :require_login, only: [:new]
 
   def index
-    @listings = Listing.where(user_id: current_user.id)
+    if signed_in?
+      @listings = Listing.where(user_id: current_user.id)
+    else
+      redirect_to sign_in_path
+    end
   end
 
   def new
@@ -27,8 +31,12 @@ class ListingsController < ApplicationController
   end
 
   def edit
-    @listing = Listing.find(params[:id])
-    render template: "listings/edit"
+    if signed_in?
+      @listing = Listing.find(params[:id])
+      render template: "listings/edit"
+    else
+      redirect_to sign_in_path
+    end
   end
 
   def update
@@ -50,26 +58,30 @@ class ListingsController < ApplicationController
   end
 
   def autocomplete
-    @from = params[:checkin]
-    @until = params[:checkout]
-    @reservation = Reservation.new
-    indate = @from.to_date
-    outdate = @until.to_date
-    if !indate.nil? && !outdate.nil?
-      date = []
-      while indate < outdate
-        date << indate.to_s
-        indate += 1
+    if signed_in?
+      @from = params[:checkin]
+      @until = params[:checkout]
+      @reservation = Reservation.new
+      indate = @from.to_date
+      outdate = @until.to_date
+      if !indate.nil? && !outdate.nil?
+        date = []
+        while indate < outdate
+          date << indate.to_s
+          indate += 1
+        end
       end
+      @booked = Reservation.where(checkin: date)
+      @listings = Listing.where(status: "verified").search_city(params[:search].downcase)
+      # respond_to do |format|
+      #   format.html { render action: "index" }
+      #   format.js
+      #   # format.json @results
+      # end
+      render template: "welcome/book"
+    else
+      redirect_to sign_in_path
     end
-    @booked = Reservation.where(checkin: date)
-    @listings = Listing.where(status: "verified").search_city(params[:search].downcase)
-    # respond_to do |format|
-    #   format.html { render action: "index" }
-    #   format.js
-    #   # format.json @results
-    # end
-    render template: "welcome/book"
   end
 
   private

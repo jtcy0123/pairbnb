@@ -18,16 +18,23 @@ class UsersController < Clearance::UsersController
   end
 
   def show
-    @user = User.find(params[:id])
+    if signed_in?
+      @user = User.find(params[:id])
+    else
+      redirect_to sign_in_path
+    end
   end
 
   def edit
-    @user = User.find(params[:id])
-    render template: "users/edit"
+    if signed_in?
+      @user = User.find(params[:id])
+      render template: "users/edit"
+    else
+      redirect_to sign_in_path
+    end
   end
 
   def update
-    # byebug
     user = User.find(params[:id])
     user.photo = params[:user][:photo]
     user.save(:validate => false)
