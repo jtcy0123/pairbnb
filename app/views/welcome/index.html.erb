@@ -13,56 +13,58 @@
   <% end %>
 <% end %>
 <!--  -->
-<div id = "nav" style="margin: 10px 0 -10px 5%;">
-  <% if @lists.length > 8 %>
-    <u><%= link_to 'First', root_path %></u>&ensp;
-    <% if @page == 0 %>
-      <u><a style="color: grey" disabled>Previous</a></u>&ensp;
-    <% else %>
-      <u><%= link_to 'Previous', root_path(page: @page - 1) %></u>&ensp;
-    <% end %>
-    <% if @page == @lists.length / 8 %>
-      <u><a style="color: grey" disabled>Next</a></u>&ensp;
-    <% else %>
-      <u><%= link_to "Next", root_path(page: @page + 1) %></u>&ensp;
-    <% end %>
-    <u><%= link_to "Last", root_path(page: @lists.length / 8) %></u>&ensp;
-  <% end %>
-</div>
-<div class="largediv">
-  <% @listings.each do |l| %>
-    <div class="smalldiv">
-      <% if l.photos == [] %>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpXXggjvN_1vItyiWZKVjPqwnMUgTG1mw_vKqqhUfj8t2qg6aU" style="height: 180px" >
+<% if @listings != [] %>
+  <div id = "nav" style="margin: 10px 0 -10px 5%;">
+    <% if @lists.length > 8 %>
+      <u><%= link_to 'First', root_path %></u>&ensp;
+      <% if @page == 0 %>
+        <u><a style="color: grey" disabled>Previous</a></u>&ensp;
       <% else %>
-        <%= image_tag l.photos[0].url, style: "height: 180px; width: 100%" %>
+        <u><%= link_to 'Previous', root_path(page: @page - 1) %></u>&ensp;
       <% end %>
-      <p><b><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></b></p>
-      <p><%= l.location %>, <%= l.city %></p>
-      <p><%= raw l.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></p>
-      <p>RM <%= l.price %></p>
-      <% if current_user && current_user.role == "admin" %>
-        <p><%= form_for [User.find(l.user_id), l] do |form| %>
-            <button type="submit">Verify Property</button>
-          <% end %></p>
+      <% if @page == @lists.length / 8 %>
+        <u><a style="color: grey" disabled>Next</a></u>&ensp;
+      <% else %>
+        <u><%= link_to "Next", root_path(page: @page + 1) %></u>&ensp;
       <% end %>
-    </div>
-  <% end %>
-</div>
-<table></table>
-<div id = "nav" style="margin: 5px 5%;">
-  <% if @lists.length > 8 %>
-    <u><%= link_to 'First', root_path %></u>&ensp;
-    <% if @page == 0 %>
-      <u><a style="color: grey" disabled>Previous</a></u>&ensp;
-    <% else %>
-      <u><%= link_to 'Previous', root_path(page: @page - 1) %></u>&ensp;
+      <u><%= link_to "Last", root_path(page: @lists.length / 8) %></u>&ensp;
     <% end %>
-    <% if @page == @lists.length / 8 %>
-      <u><a style="color: grey" disabled>Next</a></u>&ensp;
-    <% else %>
-      <u><%= link_to "Next", root_path(page: @page + 1) %></u>&ensp;
+  </div>
+  <div class="largediv">
+    <% @listings.each do |l| %>
+      <div class="smalldiv">
+        <% if l.photos == [] %>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpXXggjvN_1vItyiWZKVjPqwnMUgTG1mw_vKqqhUfj8t2qg6aU" style="height: 180px" >
+        <% else %>
+          <%= image_tag l.photos[0].url, style: "height: 180px; width: 100%" %>
+        <% end %>
+        <p><b><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></b></p>
+        <p><%= l.location %>, <%= l.city %></p>
+        <p><%= raw l.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></p>
+        <p>RM <%= l.price %></p>
+        <% if current_user && current_user.role == "admin" %>
+          <p><%= form_for [User.find(l.user_id), l] do |form| %>
+              <button type="submit">Verify Property</button>
+            <% end %></p>
+        <% end %>
+      </div>
     <% end %>
-    <u><%= link_to "Last", root_path(page: @lists.length / 8) %></u>&ensp;
-  <% end %>
-</div>
+  </div>
+  <table></table>
+  <div id = "nav" style="margin: 5px 5%;">
+    <% if @lists.length > 8 %>
+      <u><%= link_to 'First', root_path %></u>&ensp;
+      <% if @page == 0 %>
+        <u><a style="color: grey" disabled>Previous</a></u>&ensp;
+      <% else %>
+        <u><%= link_to 'Previous', root_path(page: @page - 1) %></u>&ensp;
+      <% end %>
+      <% if @page == @lists.length / 8 %>
+        <u><a style="color: grey" disabled>Next</a></u>&ensp;
+      <% else %>
+        <u><%= link_to "Next", root_path(page: @page + 1) %></u>&ensp;
+      <% end %>
+      <u><%= link_to "Last", root_path(page: @lists.length / 8) %></u>&ensp;
+    <% end %>
+  </div>
+<% end %>
