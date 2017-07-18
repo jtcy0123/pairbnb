@@ -4,7 +4,7 @@ class ReservationMailer < ApplicationMailer
     @booked = User.find(reservation.user_id)
     @reservation = reservation
     @user = User.find(@listing.user_id)
-    @url = "localhost:3000/reservations." + @user.id.to_s
+    @url = "http://localhost:3000/reservations." + @user.id.to_s
     mail(to: @user.email, subject: "New Booking For Your House")
     # flash[:msg] = "Email sent!"
   end

@@ -7,18 +7,18 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Seed Users
-user = {}
-user['password'] = 'asdfgh'
+# user = {}
+# user['password'] = 'asdfgh'
 
-ActiveRecord::Base.transaction do
-  20.times do
-    user['first_name'] = Faker::Name.first_name
-    user['last_name'] = Faker::Name.last_name
-    user['email'] = Faker::Internet.email
+# ActiveRecord::Base.transaction do
+#   20.times do
+#     user['first_name'] = Faker::Name.first_name
+#     user['last_name'] = Faker::Name.last_name
+#     user['email'] = Faker::Internet.email
 
-    User.create(user)
-  end
-end
+#     User.create(user)
+#   end
+# end
 
 # Seed Listings
 listing = {}
@@ -37,7 +37,7 @@ ActiveRecord::Base.transaction do
 
     # listing['country'] = Faker::Address.country
     # listing['state'] = Faker::Address.state
-    listing['city'] = Faker::Address.city
+    listing['city'] = ["kuala lumpur", "subang jaya", "kuching", "penang", "petaling jaya"].sample
     # listing['zipcode'] = Faker::Address.zip_code
     listing['location'] = Faker::Address.street_address
 
@@ -45,7 +45,9 @@ ActiveRecord::Base.transaction do
     # listing['description'] = Faker::Hipster.sentence
     listing['tag_list'] = ["pets", "smoking", "no-smoking"].sample(2)
 
-    listing['user_id'] = uids.sample
+    listing['user_id'] = [63, 64].sample
+
+    listing['status'] = "unverified"
 
     Listing.create(listing)
   end

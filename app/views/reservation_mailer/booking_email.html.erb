@@ -7,6 +7,6 @@
     <h1>Congratulations! You have received a booking from <%= @booked.first_name %> </h1>
     <p>For your house <%= @listing.name %> from <%= @reservation.checkin %> to <%= @reservation.checkout %></p>
     <p>
-      You can see details of your new reservation here: <a href="<%= @url %>">Booking</a></p>
+      You can see details of your new reservation <%= link_to 'HERE', @url %></p>
   </body>
 </html>

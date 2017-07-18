@@ -2,10 +2,10 @@ class ReservationsController < ApplicationController
   def index
     if signed_in?
       if params[:format]
-        @listings = Listing.where(user_id: params[:format])
+        @listings = Listing.where(user_id: current_user.id)
         @reservations = Reservation.where(listing_id: @listings.pluck(:id))
       else
-        @reservations = Reservation.where(user_id: params[:user_id])
+        @reservations = Reservation.where(user_id: current_user.id)
       end
       render template: "reservations/index"
     else

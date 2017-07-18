@@ -33,7 +33,7 @@
       <% if l.photos == [] %>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpXXggjvN_1vItyiWZKVjPqwnMUgTG1mw_vKqqhUfj8t2qg6aU" style="height: 180px" >
       <% else %>
-        <%= image_tag l.photos[0].url, style: "height: 180px" %>
+        <%= image_tag l.photos[0].url, style: "height: 180px; width: 100%" %>
       <% end %>
       <p><b><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></b></p>
       <p><%= l.location %>, <%= l.city %></p>
