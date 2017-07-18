@@ -4,7 +4,7 @@ class CreateListings < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :location
       t.string :city
-      t.string :status
+      t.string :status, default: "unverified"
       t.integer :pax_num
       t.integer :price
       t.references :user
