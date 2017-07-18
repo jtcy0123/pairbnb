@@ -72,7 +72,29 @@ class ListingsController < ApplicationController
         end
       end
       @booked = Reservation.where(checkin: date)
-      @listings = Listing.where(status: "verified").search_city(params[:search].downcase)
+      if params[:pax_num] && params[:price] && params[:tag_list] && params[:pax_num] != "" && params[:price] != "" && params[:tag_list] != []
+        @listings = Listing.where(status: "verified").search_city(params[:search].downcase).search_pax(params[:pax_num].to_i).search_price(params[:price].to_i).tagged_with(params[:tag_list])
+        # pax number and price
+      elsif params[:pax_num] && params[:pax_num] != "" && params[:price] && params[:price] != ""
+        @listings = Listing.where(status: "verified").search_city(params[:search].downcase).search_pax(params[:pax_num].to_i).search_price(params[:price].to_i)
+        # pax numebr and tag
+      elsif params[:pax_num] && params[:pax_num] != "" && params[:tag_list] && params[:tag_list] != ""
+        @listings = Listing.where(status: "verified").search_city(params[:search].downcase).search_pax(params[:pax_num].to_i).tagged_with(params[:tag_list])
+        # price and tag
+      elsif params[:price] && params[:price] != "" && params[:tag_list] && params[:tag_list] != ""
+        @listings = Listing.where(status: "verified").search_city(params[:search].downcase).search_price(params[:price].to_i).tagged_with(params[:tag_list])
+        # pax number
+      elsif params[:pax_num] && params[:pax_num] != ""
+        @listings = Listing.where(status: "verified").search_city(params[:search].downcase).search_pax(params[:pax_num].to_i)
+        # price
+      elsif params[:price] && params[:price] != ""
+        @listings = Listing.where(status: "verified").search_city(params[:search].downcase).search_price(params[:price].to_i)
+        # tag
+      elsif params[:tag_list] && params[:tag_list] != ""
+        @listings = Listing.where(status: "verified").search_city(params[:search].downcase).tagged_with(params[:tag_list])
+      else
+        @listings = Listing.where(status: "verified").search_city(params[:search].downcase)
+      end
       # respond_to do |format|
       #   format.html { render action: "index" }
       #   format.js

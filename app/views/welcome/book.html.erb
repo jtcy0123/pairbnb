@@ -9,7 +9,23 @@
     <%= button_tag(type: 'submit', class: 'btn btn-default') do %>
       <i class="glyphicon glyphicon-search"></i>
     <% end %>
-  <% end %></div>
+  <% end %>
+  <a id="moreFilter">More Filter</a>
+  <div id="filterForm" style="display: none;">
+    <%= form_tag( search_autocomplete_path, method: "get" ) do %>
+      <%= hidden_field_tag( :search, params[:search], placeholder: 'City', :id => 'autocomplete_search', required: true ) %>
+      <%= hidden_field_tag( :checkin, params[:checkin], placeholder: 'Check-in', :id => 'dp1' ) %>
+      <%= hidden_field_tag( :checkout, params[:checkout], placeholder: 'Check-out', :id => 'dp2' ) %>
+      <%= text_field_tag( :pax_num, params[:pax_num], placeholder: 'No. of Guest' ) %>
+      <%= text_field_tag( :price, params[:price], placeholder: 'Max Price' ) %>
+      <%= check_box_tag 'tag_list[]', 'smoking' %>Smoking&emsp;
+      <%= check_box_tag 'tag_list[]', 'no smoking' %>No Smoking&emsp;
+      <%= check_box_tag 'tag_list[]', 'pets' %>Pets&emsp;
+      <%= button_tag(type: 'submit', class: 'btn btn-default') do %>
+        <i class="glyphicon glyphicon-search"></i>
+      <% end %>
+    <% end %></div>
+</div>
 <!--  -->
 <div id = "nav">
   <% if @listings.length > 8 %>
@@ -37,13 +53,13 @@
       <% end %>
       <p><b><%= link_to l.name, '/users/' + l.user_id.to_s + '/listings/' + l.id.to_s %></b></p>
       <p><%= l.location %>, <%= l.city %></p>
-      <p><%= raw l.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></p>
+      <p><%= l.tag_list %></p>
       <p>RM <%= l.price %></p>
       <% if @from != "" %>
         <p style="background-color: #fff; width: 13%"><%= form_for [l, @reservation] do |form| %>
             <%= form.hidden_field :checkin, value: @from %>
             <%= form.hidden_field :checkout, value: @until %>
-            <%= form.select :guest_num, (1..10).to_a %> guest(s)
+            <%= form.select :guest_num, (1..l.pax_num).to_a %> guest(s)
             <%= form.hidden_field :user_id, value: current_user.id %>
             <%= form.hidden_field :listing_id, value: l.id %>
             <%= form.submit "BOOK", class: 'btn' %>
@@ -68,3 +84,8 @@
     <button><%= link_to "Oldest", root_path(page: @listings.length / 8) %></button>
   <% end %>
 </div>
+<script>
+  $("#moreFilter").click(function () {
+      $("#filterForm").css("display","block")
+  });
+</script>
